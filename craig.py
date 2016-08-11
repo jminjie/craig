@@ -46,12 +46,17 @@ def main():
     links = ["https://sfbay.craigslist.org" + link for link in relative_links]
     # for each link, write out title and date
     fout = open("listing.txt", 'w')
-    bar = Bar('Getting title and date for links:', max=300)
+    bar = Bar('Getting info for links:', max=300)
     for link in links:
         req = urllib2.Request(link)#, headers={'User-Agent' : "Magic-Browser"})
         con = urllib2.urlopen( req)
         soup = BeautifulSoup(con.read())
-        fout.write(get_title(soup)+'\t'+link+'\t'+get_available_date(soup)+'\n')
+        fout.write(get_title(soup)+'\t'
+                +link+'\t'
+                +get_available_date(soup)
+                +get_bb(soup)
+                +get_cat(soup)
+                +'\n')
         bar.next()
     bar.finish()
     fout.close()
