@@ -53,9 +53,9 @@ def main():
         soup = BeautifulSoup(con.read())
         fout.write(get_title(soup)+'\t'
                 +link+'\t'
-                +get_available_date(soup)
-                +get_bb(soup)
-                +get_cat(soup)
+                +get_available_date(soup)+'\t'
+                +get_bb(soup)+'\t'
+                +get_cat(soup)+'\t'
                 +'\n')
         bar.next()
     bar.finish()
