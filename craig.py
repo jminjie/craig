@@ -72,6 +72,7 @@ def main():
     fout.close()
     return
 
+# test all utilities on a given link
 def test_one_link(link):
     req = urllib2.Request(link)#, headers={'User-Agent' : "Magic-Browser"})
     con = urllib2.urlopen(req)
