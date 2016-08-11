@@ -31,12 +31,19 @@ def get_bb(soup):
         if "BR" in thing.span.getText():
             return thing.span.getText()
 
-# return cat or not
+# return cat or not from soup
 def get_cat(soup):
     for thing in soup.findAll("p", { "class" : "attrgroup"}):
         if "cats are OK" in thing.span.getText():
             return thing.span.getText()
     return "no cats"
+
+# return square footage from soup
+def get_sf(soup):
+    for thing in soup.findAll("p", { "class" : "attrgroup"}):
+        for span in thing:
+            if "ft" in span:
+                return span.b.getText()
 
 def main():
     # get three pages of 100 links each
@@ -56,6 +63,7 @@ def main():
                 +get_available_date(soup)+'\t'
                 +get_bb(soup)+'\t'
                 +get_cat(soup)+'\t'
+                +get_sf(soup)+'\t'
                 +'\n')
         bar.next()
     bar.finish()
@@ -70,6 +78,7 @@ def test_one_link(link):
     print get_title(soup)
     print get_bb(soup)
     print get_cat(soup)
+    print get_sf(soup)
     print get_available_date(soup)
     return
 
