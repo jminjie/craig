@@ -25,6 +25,19 @@ def get_available_date(soup):
 def get_title(soup):
     return soup.find("title").getText()
 
+# return bed/bathrooms from soup
+def get_bb(soup):
+    for thing in soup.findAll("p", { "class" : "attrgroup"}):
+        if "BR" in thing.span.getText():
+            return thing.span.getText()
+
+# return cat or not
+def get_cat(soup):
+    for thing in soup.findAll("p", { "class" : "attrgroup"}):
+        if "cats are OK" in thing.span.getText():
+            return thing.span.getText()
+    return "no cats"
+
 def main():
     # get three pages of 100 links each
     relative_links = get_links(0)
@@ -44,6 +57,16 @@ def main():
     fout.close()
     return
 
+def test_one_link(link):
+    req = urllib2.Request(link)#, headers={'User-Agent' : "Magic-Browser"})
+    con = urllib2.urlopen(req)
+    soup = BeautifulSoup(con.read())
+    print link
+    print get_title(soup)
+    print get_bb(soup)
+    print get_cat(soup)
+    print get_available_date(soup)
+    return
 
 if __name__ == "__main__":
     main()
