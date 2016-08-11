@@ -30,6 +30,7 @@ def get_bb(soup):
     for thing in soup.findAll("p", { "class" : "attrgroup"}):
         if "BR" in thing.span.getText():
             return thing.span.getText()
+    return "not found"
 
 # return cat or not from soup
 def get_cat(soup):
@@ -44,6 +45,7 @@ def get_sf(soup):
         for span in thing:
             if "ft" in span:
                 return span.b.getText()
+    return "not found"
 
 def main():
     # get three pages of 100 links each
