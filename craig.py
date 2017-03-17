@@ -24,7 +24,7 @@ def get_available_date(soup):
 
 # return title of listing from soup
 def get_title(soup):
-    return soup.find("title").getText()
+    return soup.find("title").getText().encode('ascii', 'ignore').decode('ascii')
 
 # return bed/bathrooms from soup
 def get_bb(soup):
