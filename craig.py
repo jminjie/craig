@@ -10,7 +10,7 @@ def get_links(page_num):
     req = urllib2.Request(url)#, headers={'User-Agent' : "Magic-Browser"})
     con = urllib2.urlopen(req)
     soup = BeautifulSoup(con.read())
-    for thing in soup.findAll("a", { "class" : "i gallery"}):
+    for thing in soup.findAll("a", { "class" : "result-image gallery"}):
         links.append(thing.get("href"))
     return links
 
@@ -18,7 +18,7 @@ def get_links(page_num):
 def get_available_date(soup):
     attr = soup.find("span", {"class" : "housing_movein_now property_date"})
     if attr is not None:
-        return attr.get("date")
+        return attr.get("data-date")
     else:
         return "no date listed"
 
