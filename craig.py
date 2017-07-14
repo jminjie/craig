@@ -6,7 +6,8 @@ from progress.bar import Bar
 # return a list of links from page_num of sfbay.craigslist.org
 def get_links(page_num):
     links = []
-    url = "https://sfbay.craigslist.org/search/apa?s={}".format(page_num*100)
+    #url = "https://sfbay.craigslist.org/search/apa?s={}".format(page_num*100)
+    url = "https://sfbay.craigslist.org/search/sfc/apa?s={}".format(page_num*100)
     req = urllib2.Request(url)#, headers={'User-Agent' : "Magic-Browser"})
     con = urllib2.urlopen(req)
     soup = BeautifulSoup(con.read())
@@ -14,9 +15,17 @@ def get_links(page_num):
         links.append(thing.get("href"))
     return links
 
+
+# return price of listing from soup
+def get_price(soup):
+    price_span = soup.find("span", {"class" : "price"})
+    if "$" in price_span.getText():
+        return price_span.getText()
+    return "price not found"
+
 # return available date of listing from soup 
 def get_available_date(soup):
-    attr = soup.find("span", {"class" : "housing_movein_now property_date"})
+    attr = soup.find("span", {"class" : "housing_movein_now property_date shared-line-bubble"})
     if attr is not None:
         return attr.get("data-date")
     else:
@@ -64,6 +73,7 @@ def main():
         fout.write(get_title(soup)+'\t'
                 +link+'\t'
                 +get_available_date(soup)+'\t'
+                +get_price(soup)+'\t'
                 +get_bb(soup)+'\t'
                 +get_cat(soup)+'\t'
                 +get_sf(soup)+'\t'
